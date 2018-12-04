@@ -1,10 +1,9 @@
-# 组合完整url
+#已可以找出内容，未完成文件写入以及章节和文件名的命名
 
 import requests
 
 from bs4 import BeautifulSoup
 import re
-
 
 def getHTMLText(url):
     try:
@@ -15,7 +14,6 @@ def getHTMLText(url):
         return htmlText
     except:
         return "getHTMLText产生异常"
-
 
 def getTagList(htmlText):
     soup = BeautifulSoup(htmlText,'html.parser')
@@ -34,8 +32,16 @@ def getUrlList(tagList):
 def completeUrl(url,road):
     return (url + road[1:])
 
+def getContent(url):
+    r = getHTMLText(url)
+    soup = BeautifulSoup(r,'html.parser')
+    content = soup.find_all(id='content')
+    content = content[0].get_text()
+    return content
+
 
 if __name__== "__main__":
+    bqg_url = "http://www.biquge.com.tw/"
     url = "http://www.biquge.com.tw/0_278/"
     
     htmlText = getHTMLText(url)
@@ -43,5 +49,8 @@ if __name__== "__main__":
     urlList = getUrlList(tagList)
 
     for i in urlList:
-        #completeUrl(url,i)
-        print(completeUrl(url,i))
+        #completeurl(url,i)
+        #print(completeurl(url,i))
+        reall_url = completeUrl(bqg_url,i)
+        content = getContent(reall_url)
+        print(content)
