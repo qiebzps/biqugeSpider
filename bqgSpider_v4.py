@@ -60,4 +60,5 @@ if __name__== "__main__":
         file_name = "a.text"
         f = open(file_name,"a")
         f.write(content)
+        f.close()
         print(content)
